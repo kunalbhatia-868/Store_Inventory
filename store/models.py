@@ -5,22 +5,27 @@ from django.contrib.auth.models import User
 class Box(models.Model):
     creator=models.ForeignKey(User,on_delete=models.CASCADE,editable=False)
     length=models.DecimalField(max_digits=14, decimal_places=3)
-    bredth=models.DecimalField(max_digits=14, decimal_places=3)
+    breadth=models.DecimalField(max_digits=14, decimal_places=3)
     height=models.DecimalField(max_digits=14, decimal_places=3)
+    area=models.DecimalField(max_digits=14, decimal_places=3,default=0)
+    volume=models.DecimalField(max_digits=14, decimal_places=3,default=0)
     created_on=models.DateTimeField(auto_now_add=True)
     updated_on=models.DateTimeField(auto_now=True)
     
-    @property
-    def area(self):
+    def calculate_area(self):
         l=self.length
-        b=self.bredth
+        b=self.breadth
         h=self.height
         return 2 *(l*b + b*h + l*h)
     
-    @property
-    def volume(self):
+
+    def calculate_volume(self):
         l=self.length
-        b=self.bredth
+        b=self.breadth
         h=self.height
         return (l*b*h)
     
+    def save(self, *args, **kwargs):
+        self.area=self.calculate_area()
+        self.volume=self.calculate_volume()
+        super().save(*args, **kwargs)
