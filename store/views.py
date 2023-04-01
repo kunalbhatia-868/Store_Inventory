@@ -8,6 +8,7 @@ from .models import Box
 from user.serializers import UserSerializer
 from .serializers import BoxSerializer
 from rest_framework.response import Response
+from .filters import BoxFilter,BoxUserFilter
 # Create your views here.
 
 class CreateBoxView(APIView):
@@ -39,9 +40,11 @@ class UpdateBoxView(APIView):
 class AllBoxView(APIView):
     def get(self,request):
         boxes=Box.objects.all()
-        serializer=BoxSerializer(boxes,many=True)
+        filter_set = BoxFilter(request.GET, queryset=boxes)
+        filtered_queryset = filter_set.qs
+        serializer=BoxSerializer(filtered_queryset,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
-
+    
 class UserBoxView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -50,7 +53,9 @@ class UserBoxView(APIView):
         username=jwt.decode(token,SECRET_KEY, algorithms=['HS256'])['user_id']
         user=User.objects.get(username=username)
         boxes=Box.objects.filter(creator=user.id)
-        serializer=BoxSerializer(boxes,many=True)
+        filter_set = BoxUserFilter(request.GET, queryset=boxes)
+        filtered_queryset = filter_set.qs
+        serializer=BoxSerializer(filtered_queryset,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
     
 class BoxDeleteView(APIView):
