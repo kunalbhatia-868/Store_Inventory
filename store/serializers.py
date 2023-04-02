@@ -22,7 +22,7 @@ class BoxSerializer(serializers.ModelSerializer):
         except ValidationError as e:
             raise serializers.ValidationError(e)
         
-    def to_representation(self, instance):
-        rep= super().to_representation(instance)
-        rep['creator']=UserSerializer(instance.creator).data
-        return rep
+    # def to_representation(self, instance):
+    #     rep= super().to_representation(instance)
+    #     rep['creator']=UserSerializer(instance.creator).data
+    #     return rep
