@@ -8,6 +8,7 @@ from .models import Box
 from .serializers import BoxSerializer
 from rest_framework.response import Response
 from .filters import BoxFilter,BoxUserFilter
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 class CreateBoxView(APIView):
@@ -19,8 +20,11 @@ class CreateBoxView(APIView):
         user=User.objects.get(username=username)
         serializer=BoxSerializer(data=request.data, context={'user': user})
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
+            try:
+                serializer.save()
+                return Response(serializer.data,status=status.HTTP_201_CREATED)
+            except ValidationError as e:
+                return Response({"message":e},status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,8 +39,11 @@ class UpdateBoxView(APIView):
 
         serializer = BoxSerializer(box, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,status=status.HTTP_201_CREATED)
+            try:
+                serializer.save()
+                return Response(serializer.data,status=status.HTTP_201_CREATED)
+            except ValidationError as e:
+                return Response({"message":e},status=status.HTTP_406_NOT_ACCEPTABLE)
         else:
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
@@ -72,8 +79,11 @@ class BoxDeleteView(APIView):
         try:
             box = Box.objects.get(pk=pk)
             if box.creator.id==user.id:
-                box.delete()
-                return Response({"message":"Box id({id}) Deleted"},status=status.HTTP_200_OK)
+                try:
+                    box.delete()
+                    return Response({"message":"Box id({id}) Deleted"},status=status.HTTP_200_OK)
+                except ValidationError as e:
+                    return Response({"message":e},status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
                 return Response({"message":"only creator allowed to delete"},status=status.HTTP_403_FORBIDDEN)
         except Box.DoesNotExist:

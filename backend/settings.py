@@ -146,7 +146,7 @@ SIMPLE_JWT = {
 # L1=100              # Total Boxes added in a week Limit
 # L2=50               # Total Boxes added in a week by User Limit
 
-A1=100              # Area Average Limit
-V1=100              # Volume Average Limit
+A1=1000              # Area Average Limit
+V1=1000           # Volume Average Limit
 L1=5                # Total Boxes added in a week Limit
-L2=4                # Total Boxes added in a week by User Limit
+L2=4               # Total Boxes added in a week by User Limit
