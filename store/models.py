@@ -44,12 +44,12 @@ def box_save_conditions(sender,instance,**kwargs):
     # Condition 1 
     # Average area of all added boxes should not exceed A1
     user=instance.creator
-    total_area=Box.objects.aggregate(Sum('area'))['area__sum']
+    total_area=Box.objects.aggregate(Sum('area'))['area__sum'] or 0
     total_boxes=Box.objects.count()
 
     if instance.pk:
         # in case update called on a box
-        curr_box_area=Box.objects.get(pk=instance.pk)
+        curr_box_area=Box.objects.get(pk=instance.pk).area
         total_area=total_area+instance.area-curr_box_area
     else:
         # new box added
@@ -63,12 +63,12 @@ def box_save_conditions(sender,instance,**kwargs):
 
     # Condition 2
     # Average volume of all boxes added by the current user shall not exceed V1
-    total_volume=Box.objects.filter(creator=user).aggregate(Sum('volume'))['volume__sum']
+    total_volume=Box.objects.filter(creator=user).aggregate(Sum('volume'))['volume__sum'] or 0
     total_boxes=Box.objects.filter(creator=user).count()
 
     if instance.pk:
         # in case update called on a box
-        curr_box_volume=Box.objects.get(pk=instance.pk)
+        curr_box_volume=Box.objects.get(pk=instance.pk).volume
         total_volume=total_volume+instance.volume-curr_box_volume
     else:
         # new box added
@@ -110,7 +110,7 @@ def box_delete_conditions(sender,instance,**kwargs):
     # Condition 1 
     # Average area of all added boxes should not exceed A1
     user=instance.creator
-    total_area=Box.objects.aggregate(Sum('area'))['area__sum']
+    total_area=Box.objects.aggregate(Sum('area'))['area__sum'] or 0
     total_boxes=Box.objects.count()
     item_area=instance.area
     
@@ -121,7 +121,7 @@ def box_delete_conditions(sender,instance,**kwargs):
 
     # Condition 2
     # Average volume of all boxes added by the current user shall not exceed V1
-    total_volume=Box.objects.aggregate(Sum('volume'))['volume__sum']
+    total_volume=Box.objects.aggregate(Sum('volume'))['volume__sum'] or 0
     total_boxes=Box.objects.count()
     item_volume=instance.volume
     if total_boxes>1:

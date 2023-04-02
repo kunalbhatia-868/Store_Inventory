@@ -81,7 +81,7 @@ class BoxDeleteView(APIView):
             if box.creator.id==user.id:
                 try:
                     box.delete()
-                    return Response({"message":"Box id({id}) Deleted"},status=status.HTTP_200_OK)
+                    return Response({"message":"Box Deleted"},status=status.HTTP_200_OK)
                 except ValidationError as e:
                     return Response({"message":e},status=status.HTTP_406_NOT_ACCEPTABLE)
             else:
