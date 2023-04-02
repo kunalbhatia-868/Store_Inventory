@@ -1,5 +1,4 @@
 from django_filters.rest_framework import FilterSet, NumberFilter,CharFilter,DateFilter
-from rest_framework.views import APIView
 from .models import Box
 
 class BoxFilter(FilterSet):
