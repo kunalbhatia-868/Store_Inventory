@@ -1,3 +1,16 @@
+
+---
+Demo Staff User Login Credentials for Deployed API:
+
+    1.  username - demo_staff_1  , password - staffishere 
+    2.  username - demo_staff_2  , password - staffishere 
+    3.  username - demo_staff_3  , password - staffishere 
+
+Demo Non Staff  User Login Credentials:
+
+    1.  username - demo_user_1  , password - demoishere 
+
+---
 # Django REST Framework Project Setup Guide
 
 This guide will help you set up a Django REST Framework project with the required dependencies and create a superuser.

@@ -6,13 +6,26 @@
 * Staff User - can only be created via createsuperuser command ( step given in Readme.md to create superuser) (is_staff=True)
 
 
+---
+Demo Staff User Login Credentials:
+
+    1.  username - demo_staff_1  , password - staffishere 
+    2.  username - demo_staff_2  , password - staffishere 
+    3.  username - demo_staff_3  , password - staffishere 
+
+Demo Non Staff  User Login Credentials:
+
+    1.  username - demo_user_1  , password - demoishere 
+
+---
+
 ## 1: Register User (Base User) 
 - It can be used to create general user.
 - Request parameters - username,password
 - POST
 
 ```
-http://127.0.0.1:8000/accounts/register
+https://store-inventory.onrender.com/accounts/register
 ```
 
 ## 2: Login User (Base User or Staff User) 
@@ -21,7 +34,7 @@ http://127.0.0.1:8000/accounts/register
 - POST
 
 ```
-http://127.0.0.1:8000/accounts/login/token
+https://store-inventory.onrender.com/accounts/login/token
 ```
 
 ## 3: Create Box 
@@ -32,7 +45,7 @@ http://127.0.0.1:8000/accounts/login/token
 - POST
 
 ```
-http://127.0.0.1:8000/store/add_box
+https://store-inventory.onrender.com/store/add_box
 ```
 
 ## 4: Update Box 
@@ -43,7 +56,7 @@ http://127.0.0.1:8000/store/add_box
 - PUT
 
 ```
-http://127.0.0.1:8000/store/update_box/<box_id>
+https://store-inventory.onrender.com/store/update_box/<box_id>
 ```
 
 ## 5: Delete Box 
@@ -54,7 +67,7 @@ http://127.0.0.1:8000/store/update_box/<box_id>
 - DELETE
 
 ```
-http://127.0.0.1:8000/store/delete_box/<box_id>
+https://store-inventory.onrender.com/store/delete_box/<box_id>
 ```
 
 ## 6: Get Boxes 
@@ -64,7 +77,7 @@ http://127.0.0.1:8000/store/delete_box/<box_id>
 - GET
 
 ```
-http://127.0.0.1:8000/store/get_box?area_less_than=2200
+https://store-inventory.onrender.com/store/get_box?area_less_than=2200
 ```
 
 - other Params to filter on boxes include 
@@ -84,7 +97,7 @@ http://127.0.0.1:8000/store/get_box?area_less_than=2200
 - GET
 
 ```
-http://127.0.0.1:8000/store/get_user_box?volume_more_than=1324
+https://store-inventory.onrender.com/store/get_user_box?volume_more_than=1324
 ```
 
 - other Params to filter on boxes include 
